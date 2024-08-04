@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Index page
+Generates the API documentation homepage
 """
 from flask import jsonify
 from api.v1.views import app_views
