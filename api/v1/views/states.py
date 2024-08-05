@@ -5,11 +5,13 @@ from flask import jsonify, request, abort
 from models.state import State
 from models import storage
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def retrieve_all_states():
     "fetch all state objects"
     all_states = storage.all(State).values()
     return jsonify([s.to_dict() for s in all_states])
+
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def fetch_state(state_id):
@@ -19,7 +21,9 @@ def fetch_state(state_id):
         abort(404)
     return jsonify(st.to_dict())
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def del_state(state_id):
     """Delete a State object"""
     st = storage.get(State, state_id)
@@ -28,6 +32,7 @@ def del_state(state_id):
     storage.delete(st)
     storage.save()
     return jsonify({}), 200
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def add_new_state():
@@ -40,6 +45,7 @@ def add_new_state():
     state_instance = State(**request_data)
     state_instance.save()
     return jsonify(state_instance.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
