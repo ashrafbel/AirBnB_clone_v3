@@ -15,6 +15,7 @@ def teardown_db(exception):
     "Cleans up resources following each request"
     storage.close()
 
+
 @app.errorhandler(404)
 def note_found_page(error):
     "page note found"
