@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 "Implementation of a RESTful API using the Flask web framework"
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -14,6 +14,11 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     "Cleans up resources following each request"
     storage.close()
+
+@app.errorhandler(404)
+def note_found_page(error):
+    "page note found"
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
