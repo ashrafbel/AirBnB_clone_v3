@@ -9,7 +9,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def retrieve_all_states(state_id):
+def retrieve_all_cities(state_id):
     "Get all City objects for a specific State"
     st = storage.get(State, state_id)
     if not st:
