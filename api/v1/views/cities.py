@@ -14,7 +14,6 @@ def retrieve_all_cities(state_id):
     st = storage.get(State, state_id)
     if not st:
         abort(404)
-        
     city_objects = [city.to_dict() for city in st.cities]
     return jsonify(city_objects)
 
@@ -35,12 +34,12 @@ def del_city(city_id):
     if not ct:
         abort(404)
     storage.delete(ct)
-    
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def create_city(state_id):
     "add new city"
     st = storage.get(State, state_id)
@@ -52,7 +51,6 @@ def create_city(state_id):
         return jsonify({"error": "Missing name"}), 400
     city_info = request.get_json()
     city_info['state_id'] = state_id
-    
     add_new_city = City(**city_info)
     add_new_city.save()
     return jsonify(add_new_city.to_dict()), 201
